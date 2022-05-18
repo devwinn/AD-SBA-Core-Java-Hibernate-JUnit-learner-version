@@ -35,26 +35,20 @@ public class CourseService implements CourseI {
     public Course getCourseById(int courseId) {
         Session s = HibernateUtil.getSessionFactory().openSession();
         Transaction t = null;
-//        Course c = new Course();
-//        String hql = "from Course where id = :id";
-//
-//        try {
-//            t = s.beginTransaction();
-//            Query q = s.createQuery(hql, Course.class);
-//            q.setParameter("id", courseId);
-//            c = (Course) q.getSingleResult();
-          try {
-              Course c = s.get(Course.class, courseId);
-              if(c == null)
-                  throw new HibernateException("Did not find course");
-              else
-                  return c;
+        Course c = new Course();
+        String hql = "from Course where id = :id";
+
+        try {
+            t = s.beginTransaction();
+            Query q = s.createQuery(hql, Course.class);
+            q.setParameter("id", courseId);
+            c = (Course) q.getSingleResult();
           } catch (HibernateException ex) {
             ex.printStackTrace();
           } finally {
             s.close();
           }
-          return new Course();
+          return c;
     }
 
     @Override

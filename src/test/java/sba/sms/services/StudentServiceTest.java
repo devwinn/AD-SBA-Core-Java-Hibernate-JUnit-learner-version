@@ -38,4 +38,12 @@ class StudentServiceTest {
         assertThat(studentService.getAllStudents()).hasSameElementsAs(expected);
 
     }
+
+    @Test
+    void getStudentByEmail() {
+
+        assertThat(studentService.getStudentByEmail("reema@gmail.com")).extracting(student -> student.getName().equals("reema brown"));
+        assertThat(studentService.getStudentByEmail("reema@gmail.com")).extracting(student -> student.getPassword().equals("password"));
+
+    }
 }
