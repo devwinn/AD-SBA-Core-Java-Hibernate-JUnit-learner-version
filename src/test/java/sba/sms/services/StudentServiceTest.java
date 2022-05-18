@@ -12,6 +12,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @FieldDefaults(level = AccessLevel.PRIVATE)
 class StudentServiceTest {
@@ -41,9 +42,10 @@ class StudentServiceTest {
 
     @Test
     void getStudentByEmail() {
-
-        assertThat(studentService.getStudentByEmail("reema@gmail.com")).extracting(student -> student.getName().equals("reema brown"));
-        assertThat(studentService.getStudentByEmail("reema@gmail.com")).extracting(student -> student.getPassword().equals("password"));
-
+        Student expected = new Student();
+        expected.setEmail("reema@gmail.com");
+        expected.setName("reema brown");
+        expected.setPassword("password");
+        assertEquals(expected.getEmail(), studentService.getStudentByEmail("reema@gmail.com").getEmail());
     }
 }
