@@ -24,24 +24,28 @@ import java.util.Objects;
 public class Student {
 
 
-    @Column(length = 50, name = "email")
-    @NonNull
     @Id
+    @NonNull
+    @Column(length = 50, nullable = false, name = "email")
     String email;
 
-    @Column(length = 50, name = "name")
     @NonNull
+    @Column(length = 50, nullable = false,name = "name")
     String name;
 
-    @Column(length = 50, name = "password")
     @NonNull
+    @Column(length = 50, nullable = false, name = "password")
     String password;
 
     @ToString.Exclude
-    @EqualsAndHashCode.Exclude
-    @ManyToMany(cascade = {CascadeType.DETACH,CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REFRESH}, fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REFRESH})
     @JoinTable(name = "student_courses", joinColumns = @JoinColumn(name = "student_email"), inverseJoinColumns = @JoinColumn(name = "courses_id"))
     List<Course> courses = new ArrayList<>();
+
+    public void addCourse(Course course) {
+        courses.add(course);
+        course.getStudents().add(this);
+    }
 
 
 
